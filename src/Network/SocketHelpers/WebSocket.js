@@ -36,9 +36,8 @@ define(function()
 		}
 
 		// Open Websocket
-		this.ws            = new WebSocket(url);
-		this.ws.binaryType = 'arraybuffer';
-
+  	        this.ws            = new WebSocket(url, ['binary', 'base64']);
+	        this.ws.binaryType = "arraybuffer"
 		this.ws.onopen = function OnOpen()
 		{
 			self.connected = true;

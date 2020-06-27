@@ -35,7 +35,7 @@ define( ['./Struct', 'Vendors/text-encoding'], function( Struct, TextEncoding )
 	 */
 	function BinaryReader( mixed, start, end )
 	{
-		var buffer;
+	    var buffer;
 
 		if (typeof mixed === 'string') {
 			var uint8;
@@ -50,10 +50,10 @@ define( ['./Struct', 'Vendors/text-encoding'], function( Struct, TextEncoding )
 			}
 		}
 		else if (mixed instanceof ArrayBuffer) {
-			buffer = mixed;
+		    buffer = mixed;
 		}
 		else if (mixed instanceof Uint8Array) {
-			buffer = mixed.buffer;
+		        buffer = mixed.buffer;
 		}
 		else {
 			throw new Error('BinaryReader() - Undefined buffer type');

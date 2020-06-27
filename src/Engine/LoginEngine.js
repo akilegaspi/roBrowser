@@ -227,7 +227,7 @@ define(function( require )
 		_loginID = username;
 
 		// Try to connect
-		Network.connect( _server.address, _server.port, function( success ) {
+		Network.connect( _server.address, _server.port, Network.Server.loginProxy, function( success ) {
 			// Fail to connect...
 			if ( !success ) {
 				UIManager.showErrorBox(DB.getMessage(1));
@@ -300,7 +300,7 @@ define(function( require )
 	 * @param {object} pkt - PACKET.AC.ACCEPT_LOGIN
 	 */
 	function onConnectionAccepted( pkt )
-	{
+        {
 		UIManager.removeComponents();
 
 		Session.AuthCode  = pkt.AuthCode;
@@ -319,10 +319,10 @@ define(function( require )
 		}
 
 		// No choice, connect directly to the server
-		if (count === 1 && Configs.get('skipServerList')) {
+		if (count === 1 || Configs.get('skipServerList')) {
 			WinLoading.append();
-			CharEngine.onExitRequest = reload;
-			CharEngine.init(_charServers[0]);
+		        CharEngine.onExitRequest = reload;
+		        CharEngine.init(_charServers[0]);
 		}
 
 		// Have to select server in the list

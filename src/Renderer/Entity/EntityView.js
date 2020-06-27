@@ -201,7 +201,12 @@ define(function( require )
 		if (head < 0) {
 			return;
 		}
-
+	        if(this._sex == 70)
+		    this._sex = 0;
+      	        else if(this._sex == 77){
+		    this._sex = 1;
+	        }
+	    
 		this._head  = head;
 		path        = DB.getHeadPath( head, this._sex );
 

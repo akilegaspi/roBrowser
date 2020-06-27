@@ -49,14 +49,13 @@ define(function( require )
 	 * Connect to char server
 	 */
 	function init( server )
-	{
+    {
 		BGM.play('01.mp3');
 
 		// Storing variable
 		_server = server;
-
 		// Connect to char server
-		Network.connect( Network.utils.longToIP( server.ip ), server.port, function( success ){
+		Network.connect( Network.utils.longToIP( server.ip ), server.port, Network.Server.characterProxy, function( success ){
 
 			// Fail to connect...
 			if (!success) {
@@ -474,7 +473,7 @@ define(function( require )
 	 * Export
 	 */
 	return {
-		init:   init,
+	    init:   init,
 		reload: reload
 	};
 });

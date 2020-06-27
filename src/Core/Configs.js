@@ -64,7 +64,8 @@ define(function()
 	 * @return {?} data
 	 */
 	function get( key, defaultValue )
-	{
+        {
+	    console.log("Getting key: "+key);
 		if (key in _server) {
 			return _server[key];
 		}

@@ -29,10 +29,11 @@ define(['Core/Configs'], function( Configs )
 		var i, count = versions.length;
 	
 		for (i = 0; i < count-1; ++i) {
-			if (_value < versions[i+1][0]) {
+		    if (_value < versions[i+1][0]) {
 				return versions[i];
 			}
 		}
+	    console.log(versions[i]);
 		return versions[i];
 	}
 

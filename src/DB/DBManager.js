@@ -245,7 +245,9 @@ define(function(require)
 	 * @param {boolean} sex
 	 */
 	DB.getHeadPath = function getHeadPath( id, sex )
-	{
+    {
+	console.log("ID:", id);
+	console.log("SEX:", sex);
 		return 'data/sprite/\xc0\xce\xb0\xa3\xc1\xb7/\xb8\xd3\xb8\xae\xc5\xeb/' + SexTable[sex] + '/' + (HairIndexTable[sex][id] || id)+ '_' + SexTable[sex];
 	};
 

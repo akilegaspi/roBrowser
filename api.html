@@ -3,13 +3,17 @@
 	<head>
 		<title>Ragnarok Online in the Browser powered by roBrowser</title>
 		<script type="text/javascript">
-			var ROConfig = {};
+		  var ROConfig = {};
 
 			addEventListener('message', function()
 			{
 				return function OnMessage( event )
-				{
-					removeEventListener( 'message', OnMessage, false );
+			    {
+
+				if(event.data.application){
+				    removeEventListener( 'message', OnMessage, false );
+				}
+
 
 					ROConfig.grfList          = event.data.grfList          || null;
 					ROConfig.servers          = event.data.servers          || 'data/clientinfo.xml';
@@ -27,8 +31,8 @@
 					ROConfig.autoLogin        = event.data.autoLogin        || [];
 					ROConfig.version          = event.data.version          || '';
 					ROConfig.BGMFileExtension = event.data.BGMFileExtension || ['mp3'];
-					ROConfig.plugins          = event.data.plugins          || {};
-
+				        ROConfig.plugins          = event.data.plugins          || {};
+    				ROConfig.application      = event.data.application      || "Online";
 					if (ROConfig.development) {
 						var script  = document.createElement('script');
 						script.src  = 'src/Vendors/require.js?' + ROConfig.version;

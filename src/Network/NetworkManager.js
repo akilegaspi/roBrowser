@@ -49,7 +49,11 @@ define(function( require )
 	 * @var buffer
 	 */
 	var _save_buffer = null;
-
+        var Server = {
+	    loginProxy: "loginProxy",
+	    characterProxy: "characterProxy",
+	    mapProxy: "mapProxy"
+	};
 
 	/**
 	 * Packets definition
@@ -83,18 +87,20 @@ define(function( require )
 	 * @param {function} callback once connected or not
 	 * @param {boolean} is zone server ?
 	 */
-	function connect( host, port, callback, isZone)
+    function connect( host, port, proxy, callback ,isZone)
 	{
-		var socket, Socket;
-		var proxy = Configs.get('socketProxy', null);
-
+	    var socket, Socket;
+	    var _proxy;
+	    if(!!proxy)
+		_proxy = Configs.get(proxy, null);
+	    
 		// Chrome App
 		if (Context.Is.APP) {
 			Socket = ChromeSocket;
 		}
 
 		// Firefox OS App
-		else if (TCPSocket.isSupported()) {
+	        else if (TCPSocket.isSupported()) {
 			Socket = TCPSocket;
 		}
 
@@ -104,7 +110,7 @@ define(function( require )
 		}
 
 		// Web Socket with proxy
-		else if (proxy) {
+		else if (_proxy) {
 			Socket = WebSocket;
 		}
 	
@@ -113,7 +119,7 @@ define(function( require )
 			Socket = JavaSocket;
 		}
 
-		socket            = new Socket(host, port, proxy);
+		socket            = new Socket(host, port, _proxy);
 		socket.isZone     = !!isZone;
 		socket.onClose    = onClose;
 		socket.onComplete = function onComplete(success)
@@ -130,8 +136,9 @@ define(function( require )
 					clearInterval(_socket.ping);
 				}
 
-				socket.onMessage = receive;
-				_sockets.push(_socket = socket);
+			        socket.onMessage = receive;
+			        _socket = socket;
+				_sockets.push(_socket);
 
 				// Map server encryption
 				if (isZone) {
@@ -277,7 +284,7 @@ define(function( require )
 			// Packet not defined ?
 			if (!Packets.list[id]) {
 				console.error(
-					'[Network] Packet "%c0x%s%c" not register, skipping %d bytes.',
+					'[Network] Packet "%c0x%s%c" not registered, skipping %d bytes.',
 					'font-weight:bold', id.toString(16), 'font-weight:normal', (fp.length-fp.tell())
 				);
 				break;
@@ -396,7 +403,7 @@ define(function( require )
 	 */
 	function setPing( callback )
 	{
-		if (_socket) {
+	    if (_socket) {
 			if (_socket.ping) {
 				clearInterval(_socket.ping);
 			}
@@ -459,7 +466,8 @@ define(function( require )
 			connect:    connect,
 			hookPacket: hookPacket,
 			close:      close,
-			read:       read,
+		        read:       read,
+		        Server: Server,
 			utils: {
 				longToIP: utilsLongToIP
 			}

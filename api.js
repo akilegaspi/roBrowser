@@ -93,7 +93,7 @@
 	/**
 	 * @var {string} Host where to download files
 	 */
-	ROBrowser.prototype.remoteClient = 'http://grf.robrowser.com/';
+	ROBrowser.prototype.remoteClient = 'https://grf.robrowser.com/';
 
 
 	/**
@@ -248,7 +248,7 @@
 	 * @var {string} roBrowser api window path
 	 */
 	ROBrowser.prototype.baseUrl = (function(){
-		var script = document.getElementsByTagName('script');
+	    var script = document.getElementsByTagName('script');
 		return script[ script.length -1 ].src
 			.replace(/\/[^\/]+\.js.*/, '/api.js') // redirect compiled script
 			.replace(/\/src\/.*/, '/api.js');     // fix error with cache (FF)
@@ -259,11 +259,11 @@
 	 * Start ROBrowser Instance
 	 */
 	ROBrowser.prototype.start = function Start()
-	{
+    {
 		switch (this.type) {
 
 			// Create Popup
-			case ROBrowser.TYPE.POPUP:
+		case ROBrowser.TYPE.POPUP:
 				this.width  = this.width  || '800';
 				this.height = this.height || '600';
 
@@ -308,7 +308,6 @@
 					}
 					this.target.appendChild(frame);
 				}
-
 				this._APP = frame.contentWindow;
 				break;
 		}
@@ -352,7 +351,7 @@
 		}
 
 		// Start waiting for robrowser
-		this._Interval = setInterval( WaitForInitialization.bind(this), 100 );
+		this._Interval = setInterval( WaitForInitialization.bind(this), 1000 );
 		window.addEventListener('message', OnMessage, false );
 	};
 
@@ -362,7 +361,8 @@
 	 * No onload event from external iframe/popup
 	 */
 	function WaitForInitialization()
-	{
+    {
+	console.log("sending");
 		this._APP.postMessage({
 			application:      this.application,
 			servers:          this.servers,

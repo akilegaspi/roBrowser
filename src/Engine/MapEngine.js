@@ -82,7 +82,7 @@ define(function( require )
 		_mapName = mapName;
 
 		// Connect to char server
-		Network.connect( Network.utils.longToIP( ip ), port, function onconnect( success ) {
+	    Network.connect( Network.utils.longToIP( ip ), port, Network.Server.mapProxy, function onconnect( success ) {
 
 			// Force reloading map
 			MapRenderer.currentMap = '';
